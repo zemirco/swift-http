@@ -1,15 +1,12 @@
-//
-//  swift_httpTests.swift
-//  swift-httpTests
-//
-//  Created by Mirco Zeiss on 6/16/15.
-//  Copyright (c) 2015 zemirco. All rights reserved.
-//
 
 import UIKit
 import XCTest
+import swift_http
 
 class swift_httpTests: XCTestCase {
+    
+    private var url = "http://httpbin.org"
+    private let timeout: NSTimeInterval = 1
     
     override func setUp() {
         super.setUp()
@@ -21,16 +18,56 @@ class swift_httpTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testGET() {
+        let expectation = expectationWithDescription("GET")
+        HTTP.get("\(url)/get") { data, response, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(response!.statusCode, 200)
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(timeout, handler: nil)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+    func testPOST() {
+        let expectation = expectationWithDescription("POST")
+        HTTP.post("\(url)/post") { data, response, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(response!.statusCode, 200)
+            expectation.fulfill()
         }
+        waitForExpectationsWithTimeout(timeout, handler: nil)
+    }
+    
+    func testPOSTData() {
+        let expectation = expectationWithDescription("POST data")
+        var data = ["username": "john"]
+        HTTP.post("\(url)/post", data: data) { data, response, error in
+            XCTAssertNil(error)
+            if let d = data as? [String: AnyObject] {
+                if let j = d["json"] as? [String: String] {
+                    XCTAssertEqual(j["username"]!, "john")
+                }
+            }
+            XCTAssertEqual(response!.statusCode, 200)
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(timeout, handler: nil)
+    }
+    
+    func testPUTData() {
+        let expectation = expectationWithDescription("PUT data")
+        var data = ["username": "john"]
+        HTTP.put("\(url)/put", data: data) { data, response, error in
+            XCTAssertNil(error)
+            if let d = data as? [String: AnyObject] {
+                if let j = d["json"] as? [String: String] {
+                    XCTAssertEqual(j["username"]!, "john")
+                }
+            }
+            XCTAssertEqual(response!.statusCode, 200)
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(timeout, handler: nil)
     }
     
 }
