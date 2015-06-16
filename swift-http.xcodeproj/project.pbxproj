@@ -13,6 +13,7 @@
 		3BF7C3FB1B3099B1005CF9D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF7C3FA1B3099B1005CF9D7 /* Images.xcassets */; };
 		3BF7C3FE1B3099B1005CF9D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF7C3FC1B3099B1005CF9D7 /* LaunchScreen.xib */; };
 		3BF7C40A1B3099B2005CF9D7 /* swift_httpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7C4091B3099B2005CF9D7 /* swift_httpTests.swift */; };
+		3BF7C4141B309A61005CF9D7 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7C4131B309A61005CF9D7 /* HTTP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		3BF7C4031B3099B2005CF9D7 /* swift-httpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "swift-httpTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF7C4081B3099B2005CF9D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BF7C4091B3099B2005CF9D7 /* swift_httpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_httpTests.swift; sourceTree = "<group>"; };
+		3BF7C4131B309A61005CF9D7 /* HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				3BF7C3F31B3099B1005CF9D7 /* AppDelegate.swift */,
 				3BF7C3F51B3099B1005CF9D7 /* ViewController.swift */,
+				3BF7C4131B309A61005CF9D7 /* HTTP.swift */,
 				3BF7C3F71B3099B1005CF9D7 /* Main.storyboard */,
 				3BF7C3FA1B3099B1005CF9D7 /* Images.xcassets */,
 				3BF7C3FC1B3099B1005CF9D7 /* LaunchScreen.xib */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BF7C4141B309A61005CF9D7 /* HTTP.swift in Sources */,
 				3BF7C3F61B3099B1005CF9D7 /* ViewController.swift in Sources */,
 				3BF7C3F41B3099B1005CF9D7 /* AppDelegate.swift in Sources */,
 			);
