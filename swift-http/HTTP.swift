@@ -92,7 +92,7 @@ public class HTTP {
             // we have an error -> maybe connection lost
             if error != .None {
                 done(Result.Error(error))
-                return
+                return self
             }
             
             // request was success
