@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>AFA55A2A-90C8-4706-B7B7-E983BE353BB4</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>swift-http</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9C366422EE734585C373B4CF3D8F8C47CC5A0BA7</key>
 		<string>github.com:zemirco/swift-http.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>swift-http.xcodeproj/project.xcworkspace</string>
+	<string>swift-http.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9C366422EE734585C373B4CF3D8F8C47CC5A0BA7</key>

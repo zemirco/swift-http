@@ -8,7 +8,7 @@ import Foundation
  */
 public class HTTP {
     
-    public typealias Response = (AnyObject, NSHTTPURLResponse?, NSError?) -> Void
+    public typealias Response = (Result) -> Void
     
     public enum Method: String {
         case GET    = "GET"
@@ -16,6 +16,11 @@ public class HTTP {
         case PUT    = "PUT"
         case HEAD   = "HEAD"
         case DELETE = "DELETE"
+    }
+    
+    public enum Result {
+        case Success(AnyObject, NSHTTPURLResponse)
+        case Error(NSError)
     }
     
     private var request: NSMutableURLRequest
@@ -86,7 +91,7 @@ public class HTTP {
             
             // we have an error -> maybe connection lost
             if error != .None {
-                done(data, .None, error)
+                done(Result.Error(error))
                 return
             }
             
@@ -97,7 +102,7 @@ public class HTTP {
                 json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error)
             }
             let res = response as! NSHTTPURLResponse
-            done(json, res, error)
+            done(Result.Success(json, res))
         }
         task.resume()
         return self

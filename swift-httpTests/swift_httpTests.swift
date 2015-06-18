@@ -20,9 +20,13 @@ class swift_httpTests: XCTestCase {
     
     func testGET() {
         let expectation = expectationWithDescription("GET")
-        HTTP.get("\(url)/get") { data, response, error in
-            XCTAssertNil(error)
-            XCTAssertEqual(response!.statusCode, 200)
+        HTTP.get("\(url)/get") { result in
+            switch result {
+            case .Success(let json, let response):
+                XCTAssertEqual(response.statusCode, 200)
+            case .Error(let error):
+                XCTAssertNil(error)
+            }
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(timeout, handler: nil)
@@ -30,9 +34,13 @@ class swift_httpTests: XCTestCase {
     
     func testPOST() {
         let expectation = expectationWithDescription("POST")
-        HTTP.post("\(url)/post") { data, response, error in
-            XCTAssertNil(error)
-            XCTAssertEqual(response!.statusCode, 200)
+        HTTP.post("\(url)/post") { result in
+            switch result {
+            case .Success(let json, let response):
+                XCTAssertEqual(response.statusCode, 200)
+            case .Error(let error):
+                XCTAssertNil(error)
+            }
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(timeout, handler: nil)
@@ -41,14 +49,18 @@ class swift_httpTests: XCTestCase {
     func testPOSTData() {
         let expectation = expectationWithDescription("POST data")
         var data = ["username": "john"]
-        HTTP.post("\(url)/post", data: data) { data, response, error in
-            XCTAssertNil(error)
-            if let d = data as? [String: AnyObject] {
-                if let j = d["json"] as? [String: String] {
-                    XCTAssertEqual(j["username"]!, "john")
+        HTTP.post("\(url)/post", data: data) { result in
+            switch result {
+            case .Success(let json, let response):
+                if let d = json as? [String: AnyObject] {
+                    if let j = d["json"] as? [String: String] {
+                        XCTAssertEqual(j["username"]!, "john")
+                    }
                 }
+                XCTAssertEqual(response.statusCode, 200)
+            case .Error(let error):
+                XCTAssertNil(error)
             }
-            XCTAssertEqual(response!.statusCode, 200)
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(timeout, handler: nil)
@@ -57,14 +69,18 @@ class swift_httpTests: XCTestCase {
     func testPUTData() {
         let expectation = expectationWithDescription("PUT data")
         var data = ["username": "john"]
-        HTTP.put("\(url)/put", data: data) { data, response, error in
-            XCTAssertNil(error)
-            if let d = data as? [String: AnyObject] {
-                if let j = d["json"] as? [String: String] {
-                    XCTAssertEqual(j["username"]!, "john")
+        HTTP.put("\(url)/put", data: data) { result in
+            switch result {
+            case .Success(let json, let response):
+                if let d = json as? [String: AnyObject] {
+                    if let j = d["json"] as? [String: String] {
+                        XCTAssertEqual(j["username"]!, "john")
+                    }
                 }
+                XCTAssertEqual(response.statusCode, 200)
+            case .Error(let error):
+                XCTAssertNil(error)
             }
-            XCTAssertEqual(response!.statusCode, 200)
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(timeout, handler: nil)
