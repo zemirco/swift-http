@@ -55,12 +55,12 @@ public class HTTP {
         return HTTP(method: .POST, url: url)
     }
     
-    public class func post(url: String, data: AnyObject, done: Response) -> HTTP {
-        return HTTP.post(url).send(data).end(done)
-    }
-    
     public class func post(url: String, done: Response) -> HTTP {
         return HTTP.post(url).end(done)
+    }
+    
+    public class func post(url: String, data: AnyObject, done: Response) -> HTTP {
+        return HTTP.post(url).send(data).end(done)
     }
     
     // PUT
@@ -68,8 +68,21 @@ public class HTTP {
         return HTTP(method: .PUT, url: url)
     }
     
+    public class func put(url: String, done: Response) -> HTTP {
+        return HTTP.put(url).end(done)
+    }
+    
     public class func put(url: String, data: AnyObject, done: Response) -> HTTP {
         return HTTP.put(url).send(data).end(done)
+    }
+    
+    // DELETE
+    public class func delete(url: String) -> HTTP {
+        return HTTP(method: .DELETE, url: url)
+    }
+    
+    public class func delete(url: String, done: Response) -> HTTP {
+        return HTTP.delete(url).end(done)
     }
     
     
@@ -92,7 +105,7 @@ public class HTTP {
             // we have an error -> maybe connection lost
             if error != .None {
                 done(Result.Error(error))
-                return self
+                return
             }
             
             // request was success
@@ -101,6 +114,14 @@ public class HTTP {
             if data != .None {
                 json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error)
             }
+            
+            // handle json serialization error
+            if error != .None {
+                done(Result.Error(error!))
+                return
+            }
+            
+            // looking good
             let res = response as! NSHTTPURLResponse
             done(Result.Success(json, res))
         }
