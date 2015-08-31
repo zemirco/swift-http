@@ -5,7 +5,7 @@ import swift_http
 
 class swift_httpTests: XCTestCase {
     
-    private var url = "http://httpbin.org"
+    private var url = "https://httpbin.org"
     private let timeout: NSTimeInterval = 1
     
     override func setUp() {
@@ -22,7 +22,7 @@ class swift_httpTests: XCTestCase {
         let expectation = expectationWithDescription("GET")
         HTTP.get("\(url)/get") { result in
             switch result {
-            case .Success(let json, let response):
+            case .Success(_, let response):
                 XCTAssertEqual(response.statusCode, 200)
             case .Error(let error):
                 XCTAssertNil(error)
@@ -36,7 +36,7 @@ class swift_httpTests: XCTestCase {
         let expectation = expectationWithDescription("POST")
         HTTP.post("\(url)/post") { result in
             switch result {
-            case .Success(let json, let response):
+            case .Success(_, let response):
                 XCTAssertEqual(response.statusCode, 200)
             case .Error(let error):
                 XCTAssertNil(error)
@@ -48,7 +48,7 @@ class swift_httpTests: XCTestCase {
     
     func testPOSTData() {
         let expectation = expectationWithDescription("POST data")
-        var data = ["username": "john"]
+        let data = ["username": "john"]
         HTTP.post("\(url)/post", data: data) { result in
             switch result {
             case .Success(let json, let response):
@@ -68,7 +68,7 @@ class swift_httpTests: XCTestCase {
     
     func testPUTData() {
         let expectation = expectationWithDescription("PUT data")
-        var data = ["username": "john"]
+        let data = ["username": "john"]
         HTTP.put("\(url)/put", data: data) { result in
             switch result {
             case .Success(let json, let response):
