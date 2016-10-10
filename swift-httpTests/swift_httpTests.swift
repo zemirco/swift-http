@@ -5,8 +5,8 @@ import swift_http
 
 class swift_httpTests: XCTestCase {
     
-    private var url = "https://httpbin.org"
-    private let timeout: NSTimeInterval = 1
+    fileprivate var url = "https://httpbin.org"
+    fileprivate let timeout: TimeInterval = 1
     
     override func setUp() {
         super.setUp()
@@ -19,71 +19,71 @@ class swift_httpTests: XCTestCase {
     }
     
     func testGET() {
-        let expectation = expectationWithDescription("GET")
-        HTTP.get("\(url)/get") { result in
+        let expectation = self.expectation(description: "GET")
+        _ = HTTP.get("\(url)/get") { result in
             switch result {
-            case .Success(_, let response):
+            case .success(_, let response):
                 XCTAssertEqual(response.statusCode, 200)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertNil(error)
             }
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testPOST() {
-        let expectation = expectationWithDescription("POST")
-        HTTP.post("\(url)/post") { result in
+        let expectation = self.expectation(description: "POST")
+        _ = HTTP.post("\(url)/post") { result in
             switch result {
-            case .Success(_, let response):
+            case .success(_, let response):
                 XCTAssertEqual(response.statusCode, 200)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertNil(error)
             }
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testPOSTData() {
-        let expectation = expectationWithDescription("POST data")
+        let expectation = self.expectation(description: "POST data")
         let data = ["username": "john"]
-        HTTP.post("\(url)/post", data: data) { result in
+        _ = HTTP.post("\(url)/post", data: data as AnyObject) { result in
             switch result {
-            case .Success(let json, let response):
+            case .success(let json, let response):
                 if let d = json as? [String: AnyObject] {
                     if let j = d["json"] as? [String: String] {
                         XCTAssertEqual(j["username"]!, "john")
                     }
                 }
                 XCTAssertEqual(response.statusCode, 200)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertNil(error)
             }
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testPUTData() {
-        let expectation = expectationWithDescription("PUT data")
+        let expectation = self.expectation(description: "PUT data")
         let data = ["username": "john"]
-        HTTP.put("\(url)/put", data: data) { result in
+        _ = HTTP.put("\(url)/put", data: data as AnyObject) { result in
             switch result {
-            case .Success(let json, let response):
+            case .success(let json, let response):
                 if let d = json as? [String: AnyObject] {
                     if let j = d["json"] as? [String: String] {
                         XCTAssertEqual(j["username"]!, "john")
                     }
                 }
                 XCTAssertEqual(response.statusCode, 200)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertNil(error)
             }
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
 }
